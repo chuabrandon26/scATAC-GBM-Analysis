@@ -1,6 +1,6 @@
 # scATAC-seq Analysis of Glioblastoma (GSE138794)
 
-A single-cell ATAC-seq analysis pipeline applied to human glioblastoma patient data from GEO dataset GSE138794. This project implements a full Python-based scATAC workflow — from raw peak-by-cell Matrix Market files through TF-IDF normalization, LSI dimensionality reduction, UMAP clustering, gene activity scoring, differential accessibility, and machine learning — mirroring the logic of established tools such as ArchR, MUON, and SnapATAC2.
+A single-cell ATAC-seq analysis pipeline applied to human glioblastoma patient data from GEO dataset GSE138794. This project implements a full Python-based scATAC workflow, from raw peak-by-cell Matrix Market files through TF-IDF normalization, LSI dimensionality reduction, UMAP clustering, gene activity scoring, differential accessibility, and machine learning, mirroring the logic of established tools such as ArchR, MUON, and SnapATAC2.
 
 ---
 
