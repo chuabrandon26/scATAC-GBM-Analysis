@@ -1,10 +1,53 @@
-# scATAC-seq Analysis of Glioblastoma (GSE138794)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/visual-abstract-dark.svg">
+  <img alt="Visual abstract: a Python scATAC-seq workflow (TF-IDF, LSI, Leiden clustering, UMAP, gene activity, differential accessibility and machine learning) applied to 22,873 cells from five glioblastoma patients in GEO GSE138794. Each tumor splits into four to nine chromatin states, patients share conserved programs, and an LSI-based logistic regression reaches about 0.79 balanced accuracy." src="assets/visual-abstract-light.svg" width="100%">
+</picture>
+
+<h1 align="center">scATAC-seq Analysis of Glioblastoma</h1>
+
+<p align="center">
+  Single-cell chromatin accessibility of five glioblastoma patients (GSE138794), from raw peak matrices to cell states, regulatory elements and machine learning
+</p>
+
+<p align="center">
+  <img alt="scATAC--seq: GSE138794" src="https://img.shields.io/badge/scATAC----seq-GSE138794-4a3aa7">
+  <img alt="Python: Scanpy · AnnData" src="https://img.shields.io/badge/Python-Scanpy%20%C2%B7%20AnnData-1f8f6a?logo=python&logoColor=white">
+  <img alt="ML: scikit-learn · PyTorch" src="https://img.shields.io/badge/ML-scikit--learn%20%C2%B7%20PyTorch-e09a00">
+  <img alt="motifs: HOMER" src="https://img.shields.io/badge/motifs-HOMER-d6457a">
+  <img alt="license: MIT" src="https://img.shields.io/badge/license-MIT-566573">
+</p>
+
+<p align="center">
+  <a href="#overview">Overview</a> &nbsp;·&nbsp; <a href="#results">Results</a> &nbsp;·&nbsp; <a href="#biological-interpretation">Interpretation</a> &nbsp;·&nbsp; <a href="#installation">Installation</a> &nbsp;·&nbsp; <a href="#usage">Usage</a>
+</p>
+
+---
+
+## At a glance
+
+| **22,873** | **5** | **4 to 9** | **~20k** | **≈ 0.79** |
+|:---:|:---:|:---:|:---:|:---:|
+| cells after QC | glioblastoma patients | chromatin states per patient | variable peaks per patient | balanced accuracy, LSI classifier |
+
+> **Take-home:** five glioblastomas share conserved chromatin programs, yet each tumor splits into four to nine accessibility states spanning tumor, OPC-like and immune compartments. Moreover, a simple logistic regression on LSI coordinates separates these states with about 0.79 balanced accuracy.
+
+## Skills demonstrated
+
+| Area | Evidence in this repository |
+|---|---|
+| **Single-cell epigenomics** | scATAC-seq quality control, TF-IDF normalization, latent semantic indexing, gene activity scoring and differential accessibility |
+| **Bioinformatics engineering** | Matrix Market parsing, sparse-matrix optimization, AnnData workflows and multi-patient integration |
+| **Statistics** | Wilcoxon rank-sum testing with Benjamini-Hochberg correction, cross-validation and cluster evaluation (Leiden, Louvain, k-means) |
+| **Machine learning** | Logistic regression and random forest classifiers, plus a PyTorch autoencoder with an 8-dimensional latent space |
+| **Scientific computing** | Python, NumPy, pandas, Scanpy, SciPy, scikit-learn, PyTorch and HOMER |
+
+## Overview
 
 A single-cell ATAC-seq analysis pipeline applied to human glioblastoma patient data from GEO dataset GSE138794. This project implements a full Python-based scATAC workflow, from raw peak-by-cell Matrix Market files through TF-IDF normalization, LSI dimensionality reduction, UMAP clustering, gene activity scoring, differential accessibility, and machine learning, mirroring the logic of established tools such as ArchR, MUON, and SnapATAC2.
 
 ---
 
-## Project Overview
+### Project Overview
 
 - **Data loading**: Parses Matrix Market peak-by-cell exports from scATAC.Explorer for multiple glioblastoma patients and converts them into AnnData cell-by-peak format
 - **Quality control**: Filters low-depth cells (<200 accessible peaks) and rarely accessible peaks (<3 cells)
@@ -19,7 +62,7 @@ A single-cell ATAC-seq analysis pipeline applied to human glioblastoma patient d
 
 ---
 
-## Dataset
+### Dataset
 
 | Property | Value |
 |----------|--------|
@@ -38,9 +81,9 @@ https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE138794
 
 ---
 
-# Results
+## Results
 
-## Per-Patient UMAP Clustering
+### Per-Patient UMAP Clustering
 
 Each patient was processed independently through TF-IDF normalization, LSI dimensionality reduction, neighborhood graph construction, Leiden clustering, and UMAP visualization.
 
@@ -50,21 +93,21 @@ The number of recovered chromatin states ranged from four to nine clusters depen
 
 ---
 
-## Quality Control Metrics
+### Quality Control Metrics
 
 Distribution of accessible peaks per cell before and after filtering.
 
-### Before Filtering
+#### Before Filtering
 
 ![QC Before Filtering](images/qc_distributions_before_filtering.png)
 
-### After Filtering
+#### After Filtering
 
 ![QC After Filtering](images/qc_distributions_after_filtering.png)
 
 ---
 
-## Pre vs Post QC UMAP
+### Pre vs Post QC UMAP
 
 Filtering low-depth cells and low-frequency peaks improves neighborhood structure and reduces noise within the embedding.
 
@@ -72,7 +115,7 @@ Filtering low-depth cells and low-frequency peaks improves neighborhood structur
 
 ---
 
-## LSI UMAP Clustering
+### LSI UMAP Clustering
 
 Cells projected into LSI space and colored by Leiden cluster assignment.
 
@@ -82,7 +125,7 @@ Distinct chromatin accessibility states emerge that are consistent with known GB
 
 ---
 
-## Cross-Patient UMAP
+### Cross-Patient UMAP
 
 Cells colored by patient identity reveal both shared chromatin programs and patient-specific states.
 
@@ -92,7 +135,7 @@ Strong overlap between patients suggests conserved regulatory programs across tu
 
 ---
 
-## Clustering Method Comparison
+### Clustering Method Comparison
 
 Comparison of Leiden, Louvain, and K-means clustering approaches applied to the same LSI embedding.
 
@@ -100,7 +143,7 @@ Comparison of Leiden, Louvain, and K-means clustering approaches applied to the 
 
 ---
 
-## Gene Activity Analysis
+### Gene Activity Analysis
 
 Gene activity scores were calculated from promoter and gene-body accessibility.
 
@@ -118,7 +161,7 @@ These scores help distinguish tumor-associated and immune-associated chromatin s
 
 ---
 
-## QC Metric Visualization in LSI Space
+### QC Metric Visualization in LSI Space
 
 UMAP embeddings colored by quality-control metrics.
 
@@ -128,7 +171,7 @@ This visualization confirms that clustering is not driven primarily by sequencin
 
 ---
 
-## t-SNE Visualization
+### t-SNE Visualization
 
 Alternative dimensionality reduction performed using t-SNE on LSI coordinates.
 
@@ -136,7 +179,7 @@ Alternative dimensionality reduction performed using t-SNE on LSI coordinates.
 
 ---
 
-## Differential Accessibility Analysis
+### Differential Accessibility Analysis
 
 Wilcoxon rank-sum testing was performed between clusters.
 
@@ -146,11 +189,11 @@ Significant peaks were identified using:
 - q-value < 0.05
 - |log2FC| > 0.5
 
-### Cluster 0 vs Cluster 1
+#### Cluster 0 vs Cluster 1
 
 ![Cluster 0 vs Cluster 1](images/diff_peaks_cluster0_vs_cluster1.png)
 
-### Cluster 4 vs Cluster 2
+#### Cluster 4 vs Cluster 2
 
 ![Cluster 4 vs Cluster 2](images/diff_peaks_cluster4_vs_cluster2.png)
 
@@ -158,7 +201,7 @@ Differential peaks can be exported as BED files for downstream HOMER motif enric
 
 ---
 
-## Cluster × Patient Composition
+### Cluster × Patient Composition
 
 Fraction of cells contributed by each patient within each cluster.
 
@@ -172,7 +215,7 @@ This helps identify:
 
 ---
 
-## Machine Learning Classification
+### Machine Learning Classification
 
 Classification models were trained using LSI coordinates as input features.
 
@@ -187,23 +230,23 @@ Cross-validation performance indicates that chromatin state structure is more pr
 
 ---
 
-## Autoencoder Latent Space
+### Autoencoder Latent Space
 
 A PyTorch autoencoder was trained on LSI coordinates to learn a nonlinear latent representation.
 
 The model compresses chromatin accessibility patterns into an 8-dimensional latent space.
 
-### Reconstruction Loss
+#### Reconstruction Loss
 
 ![Autoencoder Loss](images/autoencoder_reconstruction_loss.png)
 
-### Autoencoder UMAP Embedding
+#### Autoencoder UMAP Embedding
 
 ![Autoencoder UMAP](images/umap_autoencoder_clusters_patients.png)
 
 ---
 
-## PCA vs UMAP Comparison
+### PCA vs UMAP Comparison
 
 Comparison of linear and nonlinear dimensionality reduction approaches.
 
@@ -211,31 +254,31 @@ Comparison of linear and nonlinear dimensionality reduction approaches.
 
 ---
 
-## Individual Patient Embeddings
+### Individual Patient Embeddings
 
-### SF11612
+#### SF11612
 
 ![SF11612](images/GSE138794_Glioma_Patient_SF11612_umap.png)
 
-### SF11949
+#### SF11949
 
 ![SF11949](images/GSE138794_Glioma_Patient_SF11949_umap.png)
 
-### SF11956
+#### SF11956
 
 ![SF11956](images/GSE138794_Glioma_Patient_SF11956_umap.png)
 
-### SF11964
+#### SF11964
 
 ![SF11964](images/GSE138794_Glioma_Patient_SF11964_umap.png)
 
-### SF11979
+#### SF11979
 
 ![SF11979](images/GSE138794_Glioma_Patient_SF11979_umap.png)
 
 ---
 
-# Biological Interpretation
+## Biological Interpretation
 
 The chromatin accessibility landscape recovered by this pipeline is consistent with known glioblastoma biology.
 
@@ -261,7 +304,7 @@ Cluster-specific peaks identify candidate regulatory regions associated with GBM
 
 ---
 
-# Repository Structure
+## Repository Structure
 
 ```text
 scATAC-GBM-Analysis/
@@ -295,7 +338,7 @@ scATAC-GBM-Analysis/
 
 ---
 
-# Installation
+## Installation
 
 ```bash
 conda create -n scatac_gbm python=3.11 -y
@@ -322,7 +365,7 @@ perl ~/miniforge3/envs/scatac_gbm/share/homer/configureHomer.pl -install hg38
 
 ---
 
-# Usage
+## Usage
 
 Clone the repository:
 
@@ -342,7 +385,7 @@ Download raw peak matrices from GEO and place patient directories into the proje
 
 ---
 
-# Key Dependencies
+## Key Dependencies
 
 | Package | Purpose |
 |----------|----------|
@@ -359,51 +402,10 @@ Download raw peak matrices from GEO and place patient directories into the proje
 
 ---
 
-# Skills Demonstrated
-
-### Single-Cell Epigenomics
-
-- scATAC-seq preprocessing
-- TF-IDF normalization
-- Latent Semantic Indexing (LSI)
-- Gene activity scoring
-- Differential chromatin accessibility
-
-### Bioinformatics Engineering
-
-- Matrix Market parsing
-- Sparse matrix optimization
-- AnnData workflows
-- Multi-patient integration
-- Reproducible pipelines
-
-### Statistics
-
-- Wilcoxon rank-sum testing
-- Benjamini-Hochberg correction
-- Cross-validation
-- Cluster evaluation
-
-### Machine Learning
-
-- Logistic Regression
-- Random Forest
-- Autoencoders
-- Dimensionality reduction
-
-### Scientific Computing
-
-- Python
-- NumPy
-- Pandas
-- Scanpy
-- SciPy
-- scikit-learn
-- PyTorch
 
 ---
 
-# License
+## License
 
 MIT License.
 
